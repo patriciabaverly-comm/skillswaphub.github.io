@@ -57,21 +57,31 @@
 
         /* --- MOBILE RESPONSIVE FIXES FOR ANDROID / PHONES --- */
         @media (max-width: 768px) {
-            /* Fix Navigation */
+            /* Fix Navigation Order */
             nav {
-                flex-direction: column;
-                gap: 1rem;
+                flex-direction: row;
+                flex-wrap: wrap;
                 padding: 1rem;
+                align-items: center;
+            }
+            .logo {
+                order: 1;
+                font-size: 1.2rem;
+            }
+            nav .btn-outline {
+                order: 2;
+                width: auto;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
             }
             .nav-links {
+                order: 3;
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 1rem;
                 width: 100%;
-            }
-            nav .btn {
-                width: 100%;
+                margin-top: 1rem;
             }
             
             /* Fix Search and Header */
