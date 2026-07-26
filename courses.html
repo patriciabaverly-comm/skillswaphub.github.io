@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - SkillSwap Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Filter specific styles not in the main style.css */
+        .filter-container {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-select {
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 140px;
+            background-color: white;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+        .filter-select:focus { outline: none; border-color: var(--primary); }
+        #no-results { display: none; text-align: center; width: 100%; padding: 2rem; color: var(--text-light); grid-column: 1 / -1; }
+        
+        .browse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .categories {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .category-pill {
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        .category-pill:hover { background: var(--primary); color: white; }
+    </style>
+    <script>
+        // Security Check: Keeps page restricted to logged-in students
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('userRole') !== 'student') {
+            window.location.href = 'index.html';
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">🏠 SkillSwap Hub (Student)</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="courses.html" class="active">Courses</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <!-- Content -->
+    <div class="container">
+        
+        <!-- Search Header -->
+        <div class="browse-header">
+            <h2>Explore Skills</h2>
+            <input type="text" id="searchInput" class="search-bar" style="margin-bottom: 0;" placeholder="🔍 Search for a skill (e.g. Python, Cooking)...">
+        </div>
+
+        <!-- Filter Dropdowns -->
+        <div class="filter-container">
+            <select id="filterSkill" class="filter-select">
+                <option value="">All Skills</option>
+                <option value="coding">Coding</option>
+                <option value="design">Graphic Design</option>
+                <option value="languages">Languages</option>
+                <option value="marketing">Marketing</option>
+            </select>
+            
+            <select id="filterLevel" class="filter-select">
+                <option value="">All Levels</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+
+            <select id="filterDuration" class="filter-select">
+                <option value="">Any Duration</option>
+                <option value="short">1 - 2 Weeks</option>
+                <option value="medium">3 - 4 Weeks</option>
+                <option value="long">1+ Months</option>
+            </select>
+
+            <select id="filterPrice" class="filter-select">
+                <option value="">Any Price</option>
+                <option value="free">Free</option>
+                <option value="low">Under 20 Credits</option>
+                <option value="mid">20 - 50 Credits</option>
+                <option value="high">50+ Credits</option>
+            </select>
+
+            <select id="filterRating" class="filter-select">
+                <option value="">Any Rating</option>
+                <option value="4">⭐⭐⭐⭐ & Up</option>
+                <option value="3">⭐⭐⭐ & Up</option>
+            </select>
+        </div>
+        
+        <!-- Category Pills -->
+        <div class="categories">
+            <div class="category-pill" onclick="document.getElementById('filterSkill').value='languages'; applyFilters();">🌐 Languages</div>
+            <div class="category-pill" onclick="document.getElementById('filterSkill').value='coding'; applyFilters();">💻 Coding</div>
+            <div class="category-pill" onclick="document.getElementById('filterSkill').value='design'; applyFilters();">🎨 Graphic Design</div>
+            <div class="category-pill" onclick="document.getElementById('filterSkill').value='marketing'; applyFilters();">📈 Business</div>
+            <div class="category-pill" style="background: #e5e7eb; border-color: transparent;" onclick="resetFilters()">🔄 Clear Filters</div>
+        </div>
+
+        <!-- Course Grid (Now using the Stats Grid layout) -->
+        <div class="stats-grid" id="courseGrid">
+            
+            <div class="stat-card" data-skill="coding" data-level="intermediate" data-duration="medium" data-price="50" data-rating="5">
+                <h3>Frontend Web Development</h3>
+                <p><strong>👨‍🏫 Teacher:</strong> Alex Johnson</p>
+                <p><strong>📊 Level:</strong> Intermediate</p>
+                <p><strong>⏱️ Duration:</strong> 4 Weeks</p>
+                <p><strong>💰 Cost:</strong> 50 Credits</p>
+                <p style="color: #f59e0b; margin: 0.5rem 0 1rem 0;">⭐⭐⭐⭐⭐ (24 Reviews)</p>
+                <button class="btn btn-primary" style="width: 100%" onclick="alert('Session Booked!')">Book Session</button>
+            </div>
+
+            <div class="stat-card" data-skill="languages" data-level="all" data-duration="short" data-price="15" data-rating="4.5">
+                <h3>Conversational Spanish</h3>
+                <p><strong>👨‍🏫 Teacher:</strong> Maria Garcia</p>
+                <p><strong>📊 Level:</strong> All Levels</p>
+                <p><strong>⏱️ Duration:</strong> 1 Hr / Session</p>
+                <p><strong>💰 Cost:</strong> 15 Credits</p>
+                <p style="color: #f59e0b; margin: 0.5rem 0 1rem 0;">⭐⭐⭐⭐½ (112 Reviews)</p>
+                <button class="btn btn-primary" style="width: 100%" onclick="alert('Session Booked!')">Book Session</button>
+            </div>
+
+            <div class="stat-card" data-skill="marketing" data-level="beginner" data-duration="short" data-price="30" data-rating="4">
+                <h3>Digital Marketing 101</h3>
+                <p><strong>👨‍🏫 Teacher:</strong> David Smith</p>
+                <p><strong>📊 Level:</strong> Beginner</p>
+                <p><strong>⏱️ Duration:</strong> 2 Weeks</p>
+                <p><strong>💰 Cost:</strong> 30 Credits</p>
+                <p style="color: #f59e0b; margin: 0.5rem 0 1rem 0;">⭐⭐⭐⭐ (8 Reviews)</p>
+                <button class="btn btn-primary" style="width: 100%" onclick="alert('Session Booked!')">Book Session</button>
+            </div>
+
+            <div class="stat-card" data-skill="design" data-level="beginner" data-duration="medium" data-price="0" data-rating="3.8">
+                <h3>Graphic Design Basics</h3>
+                <p><strong>👨‍🏫 Teacher:</strong> Sarah Lee</p>
+                <p><strong>📊 Level:</strong> Beginner</p>
+                <p><strong>⏱️ Duration:</strong> 3 Weeks</p>
+                <p><strong>💰 Cost:</strong> Free</p>
+                <p style="color: #f59e0b; margin: 0.5rem 0 1rem 0;">⭐⭐⭐¾ (45 Reviews)</p>
+                <button class="btn btn-primary" style="width: 100%" onclick="alert('Session Booked!')">Book Session</button>
+            </div>
+
+            <div class="stat-card" data-skill="coding" data-level="advanced" data-duration="long" data-price="75" data-rating="4.9">
+                <h3>Advanced Python Masters</h3>
+                <p><strong>👨‍🏫 Teacher:</strong> Dr. Alan Turing</p>
+                <p><strong>📊 Level:</strong> Advanced</p>
+                <p><strong>⏱️ Duration:</strong> 6 Weeks</p>
+                <p><strong>💰 Cost:</strong> 75 Credits</p>
+                <p style="color: #f59e0b; margin: 0.5rem 0 1rem 0;">⭐⭐⭐⭐⭐ (89 Reviews)</p>
+                <button class="btn btn-primary" style="width: 100%" onclick="alert('Session Booked!')">Book Session</button>
+            </div>
+            
+            <div id="no-results">No courses match your selected filters. Try broadening your search.</div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Live Filtering -->
+    <script>
+        function applyFilters() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const filterSkill = document.getElementById('filterSkill').value;
+            const filterLevel = document.getElementById('filterLevel').value;
+            const filterDuration = document.getElementById('filterDuration').value;
+            const filterPrice = document.getElementById('filterPrice').value;
+            const filterRating = document.getElementById('filterRating').value;
+
+            // Updated this to look for .stat-card instead of .card
+            const cards = document.querySelectorAll('.stat-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const skill = card.getAttribute('data-skill');
+                const level = card.getAttribute('data-level');
+                const duration = card.getAttribute('data-duration');
+                const price = parseFloat(card.getAttribute('data-price'));
+                const rating = parseFloat(card.getAttribute('data-rating'));
+
+                const matchesSearch = title.includes(searchQuery);
+                const matchesSkill = filterSkill === "" || skill === filterSkill;
+                const matchesLevel = filterLevel === "" || level === filterLevel || level === "all"; 
+                const matchesDuration = filterDuration === "" || duration === filterDuration;
+                
+                let matchesPrice = true;
+                if (filterPrice === "free") matchesPrice = price === 0;
+                if (filterPrice === "low") matchesPrice = price > 0 && price < 20;
+                if (filterPrice === "mid") matchesPrice = price >= 20 && price <= 50;
+                if (filterPrice === "high") matchesPrice = price > 50;
+
+                const matchesRating = filterRating === "" || rating >= parseFloat(filterRating);
+
+                if (matchesSearch && matchesSkill && matchesLevel && matchesDuration && matchesPrice && matchesRating) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            document.getElementById('no-results').style.display = (visibleCount === 0) ? "block" : "none";
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('filterSkill').value = "";
+            document.getElementById('filterLevel').value = "";
+            document.getElementById('filterDuration').value = "";
+            document.getElementById('filterPrice').value = "";
+            document.getElementById('filterRating').value = "";
+            applyFilters();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        const selects = document.querySelectorAll('.filter-select');
+        selects.forEach(select => select.addEventListener('change', applyFilters));
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - SkillSwap Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Security Check: Kick to login if not logged in as student
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('userRole') !== 'student') {
+            window.location.href = 'index.html';
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <a href="home.html" class="logo">🏠 SkillSwap Hub (Student)</a>
+        <div class="nav-links">
+            <a href="home.html" class="active">Home</a>
+            <a href="courses.html">Courses</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <div style="background: var(--card-bg); padding: 3rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Welcome back, Student! 👋</h1>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">Ready to learn a new skill today? You have <strong>120 Skill Credits</strong>.</p>
+            <a href="courses.html" class="btn btn-primary">Browse New Courses</a>
+        </div>
+    </div>
+
+</body>
+</html>

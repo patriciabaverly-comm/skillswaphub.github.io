@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Stats - SkillSwap Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('userRole') !== 'teacher') {
+            window.location.href = 'index.html';
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <a href="teacher-stats.html" class="logo">🏠 SkillSwap Hub (Instructor)</a>
+        <div class="nav-links">
+            <a href="teacher-stats.html" class="active">Stats</a>
+            <a href="teacher-create.html">Create Course</a>
+            <a href="teacher-manage.html">Manage Courses</a>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h1 style="margin-bottom: 2rem;">Course Performance Stats</h1>
+        
+        <!-- Added an ID to the search bar -->
+        <input type="text" id="statsSearchInput" class="search-bar" placeholder="🔍 Search your courses to view stats...">
+        
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3>Frontend Web Development</h3>
+                <p><strong>Enrolled Students:</strong> 45</p>
+                <p><strong>Credits Earned:</strong> 2,250</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐ (4.9)</p>
+            </div>
+            <div class="stat-card">
+                <h3>JavaScript Fundamentals</h3>
+                <p><strong>Enrolled Students:</strong> 120</p>
+                <p><strong>Credits Earned:</strong> 3,600</p>
+                <p><strong>Rating:</strong> ⭐⭐⭐⭐ (4.2)</p>
+            </div>
+            
+            <!-- A message to show when no courses match the search -->
+            <div id="no-results" style="display: none; grid-column: 1 / -1; color: var(--text-light); margin-top: 1rem;">
+                No courses match your search.
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Search Functionality -->
+    <script>
+        document.getElementById('statsSearchInput').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.stat-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                // Get the course title from the <h3> tag inside the card
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                
+                // If the title includes the search text, show it; otherwise hide it
+                if (title.includes(searchQuery)) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Show "No Results" message if everything is hidden
+            document.getElementById('no-results').style.display = (visibleCount === 0) ? "block" : "none";
+        });
+    </script>
+</body>
+</html>

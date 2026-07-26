@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses - SkillSwap Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('userRole') !== 'teacher') {
+            window.location.href = 'index.html';
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <a href="teacher-stats.html" class="logo">🏠 SkillSwap Hub (Instructor)</a>
+        <div class="nav-links">
+            <a href="teacher-stats.html">Stats</a>
+            <a href="teacher-create.html">Create Course</a>
+            <a href="teacher-manage.html" class="active">Manage Courses</a>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 style="margin-bottom: 1.5rem;">Your Published Courses</h2>
+        
+        <div class="manage-list">
+            <div class="manage-item">
+                <div>
+                    <h4 style="color: var(--primary);">Frontend Web Development</h4>
+                    <span style="font-size: 0.9rem; color: var(--text-light);">Published on Jan 12, 2024</span>
+                </div>
+                <div class="manage-actions">
+                    <button class="btn btn-outline" style="padding: 0.4rem 0.8rem;" onclick="alert('Edit mode opened')">Edit</button>
+                    <button class="btn btn-danger" style="padding: 0.4rem 0.8rem;" onclick="confirm('Are you sure you want to delete this course?')">Delete</button>
+                </div>
+            </div>
+            <div class="manage-item">
+                <div>
+                    <h4 style="color: var(--primary);">JavaScript Fundamentals</h4>
+                    <span style="font-size: 0.9rem; color: var(--text-light);">Published on Feb 2, 2024</span>
+                </div>
+                <div class="manage-actions">
+                    <button class="btn btn-outline" style="padding: 0.4rem 0.8rem;" onclick="alert('Edit mode opened')">Edit</button>
+                    <button class="btn btn-danger" style="padding: 0.4rem 0.8rem;" onclick="confirm('Are you sure you want to delete this course?')">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

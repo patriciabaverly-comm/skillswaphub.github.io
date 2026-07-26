@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course - SkillSwap Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('userRole') !== 'teacher') {
+            window.location.href = 'index.html';
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <a href="teacher-stats.html" class="logo">🏠 SkillSwap Hub (Instructor)</a>
+        <div class="nav-links">
+            <a href="teacher-stats.html">Stats</a>
+            <a href="teacher-create.html" class="active">Create Course</a>
+            <a href="teacher-manage.html">Manage Courses</a>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <div class="form-card">
+            <h2>Add a New Course</h2>
+            <br>
+            <div class="form-group">
+                <label>Course Title</label>
+                <input type="text" placeholder="e.g., Advanced CSS Layouts">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select>
+                    <option>Coding</option>
+                    <option>Design</option>
+                    <option>Languages</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Credit Cost</label>
+                <input type="number" placeholder="e.g., 50">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="4" placeholder="What will students learn?"></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="alert('Course Published!')">Publish Course</button>
+        </div>
+    </div>
+
+</body>
+</html>
