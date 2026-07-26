@@ -142,6 +142,21 @@ nav {
 .manage-item:last-child { border-bottom: none; }
 .manage-actions { display: flex; gap: 0.5rem; }
 
+/* MOBILE RESPONSIVE FIX */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    .nav-links {
+        display: flex; /* Makes it visible again */
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 1rem;
+    }
+    .btn {
+        width: 100%;
+    }
 }
